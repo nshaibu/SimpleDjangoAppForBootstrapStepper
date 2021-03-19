@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12  mt-5">
+            <div class="mb-5 mt-3 p-4 bg-white shadow">
+                <h3>Stepper process</h3>
+                <div id="stepper4" class="bs-stepper linear">
+                    <div class="bs-stepper-header" role="tablist">
+                        <div class="step" data-target="#id-job-title">
+                            <button type="button" class="step-trigger" role="tab" id="js-job-title-trigger" aria-controls="id-job-title">
+                                <span class="bs-stepper-circle">1</span>
+                                <span class="bs-stepper-label">What is your job title?</span>
+                            </button>
+                        </div>
+                        <div class="bs-stepper-line"></div>
+                        <div class="step" data-target="#id-work-experience">
+                            <button type="button" class="step-trigger" role="tab" id="js-work-experience-trigger"
+                                    aria-controls="id-work-experience">
+                                <span class="bs-stepper-circle">2</span>
+                                <span class="bs-stepper-label">Your work experience</span>
+                            </button>
+                        </div>
+                        <div class="bs-stepper-line"></div>
+                        <div class="step" data-target="#id-opportunity">
+                            <button type="button" class="step-trigger" role="tab" id="js-opportunity-trigger"
+                                    aria-controls="id-opportunity">
+                                <span class="bs-stepper-circle">3</span>
+                                <span class="bs-stepper-label">What opportunity are you open to?</span>
+                            </button>
+                        </div>
+                        <div class="bs-stepper-line"></div>
+                        <div class="step" data-target="#id-finish">
+                            <button type="button" class="step-trigger" role="tab" id="js-finish-trigger"
+                                    aria-controls="id-opportunity">
+                                <span class="bs-stepper-circle">4</span>
+                                <span class="bs-stepper-label">Finish</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bs-stepper-content">
+                        <form method="post" id="js-main-form">
+                            {% csrf_token %}
+                            <button type="submit" style="display: none" id="dummy-submit-btn"></button>
+                            <div id="id-job-title" role="tabpanel" class="bs-stepper-pane fade"
+                                 aria-labelledby="js-job-title-trigger">
+                                <div class="form-group">
+                                    <label for="jobTitleInput">Select job role</label>
+                                    <select id="jobTitleInput" data-title="select job role" name="job_title"
+                                            class="form-control js-job-title selectpicker">
+                                        <option value="Software developer">Software developer</option>
+                                        <option value="IT Manager">IT Manager</option>
+                                        <option value="Nurse">Nurse</option>
+                                        <option value="Doctor">Doctor</option>
+                                    </select>
+
+                                </div>
+                                <button type="button" class="btn btn-primary js-stepper-next-btn"
+                                        data-current-step="js-job-title" data-stepper-position="2">Next</button>
+                            </div>
+                            <div id="id-work-experience" role="tabpanel" class="bs-stepper-pane fade"
+                                 aria-labelledby="js-work-experience-trigger">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div id="js-user-work-experiences"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-5 pb-2">
+                                    <a class="btn btn-outline-dark btn-sm" data-toggle="collapse" href="#collapseExample"
+                                       role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Add experience
+                                    </a>
+                                </div>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    {{experience_form.title.label_tag}}
+                                                    {{experience_form.title}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    {{experience_form.company_name.label_tag}}
+                                                    {{experience_form.company_name}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="d-inline-flex justify-content-start">
+                                                <div class="mr-2 p-0">{{experience_form.working_here}}</div>
+                                                {{experience_form.working_here.label_tag}}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    {{experience_form.date_started.label_tag}}
+                                                    {{experience_form.date_started}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    {{experience_form.date_ended.label_tag}}
+                                                    {{experience_form.date_ended}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    {{experience_form.skills_used.label_tag}}
+                                                    {{experience_form.skills_used}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    {{experience_form.describe_accomplishment.label_tag}}
+                                                    {{experience_form.describe_accomplishment}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-primary js-save-work-experience-btn">Save</button>
+                                                    <button type="button" class="btn btn-outline-dark">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button  type="button" class="btn btn-primary js-stepper-next-btn"
+                                         data-current-step="js-work-experience" data-stepper-position="3">Next</button>
+                            </div>
+                            <div id="id-opportunity" role="tabpanel" class="bs-stepper-pane fade"
+                                 aria-labelledby="js-opportunity-trigger">
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.full_time}}</span>
+                                        {{opportunity_form.full_time.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.part_time}}</span>
+                                        {{opportunity_form.part_time.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.temporary}}</span>
+                                        {{opportunity_form.temporary.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.contract}}</span>
+                                        {{opportunity_form.contract.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.internship}}</span>
+                                        {{opportunity_form.internship.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.seasonal}}</span>
+                                        {{opportunity_form.seasonal.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.co_founder}}</span>
+                                        {{opportunity_form.co_founder.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.freelance}}</span>
+                                        {{opportunity_form.freelance.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.per_diem}}</span>
+                                        {{opportunity_form.per_diem.label_tag}}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col form-inline">
+                                        <span class="mr-2">{{opportunity_form.reserve}}</span>
+                                        {{opportunity_form.reserve.label_tag}}
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary js-stepper-next-btn mt-5"
+                                        data-current-step="js-opportunity" data-stepper-position="4">Finish</button>
+                            </div>
+                            <div id="id-finish" role="tabpanel" class="bs-stepper-pane fade"
+                                 aria-labelledby="js-finish-trigger">
+                                <div class="container">
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h4>Thanks for submitting your data.</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    let save_job_title_url = "{% url 'steps:save_work_title' %}";
+    let save_work_experience_url = "{% url 'steps:save_work_experience' %}";
+    let save_opportunity_url = "{% url 'steps:save_opportunity' %}"
+</script>
+{{block.super}}
+{% endblock scripts %}
